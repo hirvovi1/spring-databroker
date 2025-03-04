@@ -1,0 +1,6 @@
+/home/ville/scripts/spring-databroker/src/main/java/com/example/databroker/service/DataBroker.java
+/home/ville/scripts/spring-databroker/src/main/java/com/example/databroker/plugin/NumberProcessor.java
+/home/ville/scripts/spring-databroker/src/main/java/com/example/databroker/controller/MessageController.java
+/home/ville/scripts/spring-databroker/src/main/java/com/example/databroker/plugin/TextProcessor.java
+/home/ville/scripts/spring-databroker/src/main/java/com/example/databroker/plugin/MessageProcessor.java
+/home/ville/scripts/spring-databroker/src/main/java/com/example/databroker/DataBrokerApplication.java
