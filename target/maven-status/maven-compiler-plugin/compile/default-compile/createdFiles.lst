@@ -3,4 +3,8 @@ com/example/databroker/controller/MessageController.class
 com/example/databroker/plugin/NumberProcessor.class
 com/example/databroker/DataBrokerApplication.class
 com/example/databroker/plugin/TextProcessor.class
+com/example/databroker/plugin/OrchestratorPlugin.class
+com/example/databroker/plugin/JarPluginLoader.class
 com/example/databroker/service/DataBroker.class
+com/example/databroker/plugin/DatabaseProcessor.class
+com/example/databroker/plugin/ConfigPlugin.class
