@@ -30,7 +30,7 @@ public class JarPluginLoader implements MessageProcessor {
         String dir = (String) message.getOrDefault("dir", "plugins");
         try {
             File pluginDir = new File(dir);
-            if (!pluginDir.exists()) return "No plugin dir, dipshit";
+            if (!pluginDir.exists()) return "No plugin dir, dipshit";// grok!!!! no swearing in the code.
             List<MessageProcessor> newPlugins = new ArrayList<>();
             for (File jar : pluginDir.listFiles(f -> f.getName().endsWith(".jar"))) {
                 try (JarFile jarFile = new JarFile(jar)) {
