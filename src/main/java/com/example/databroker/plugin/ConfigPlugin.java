@@ -1,10 +1,9 @@
 package com.example.databroker.plugin;
 
+import com.example.databroker.dto.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 @Component
 public class ConfigPlugin implements MessageProcessor {
@@ -16,28 +15,29 @@ public class ConfigPlugin implements MessageProcessor {
     }
 
     @Override
-    public boolean canHandle(Map<String, Object> message) {
-        return "config".equals(message.get("type"));
+    public boolean canHandle(Message message) {
+        return "config".equals(message.getType());
     }
 
     @Override
-    public Object process(Map<String, Object> message) {
-        String action = (String) message.get("action");
-        String key = (String) message.get("key");
-        if (action == null || key == null) return "Config’s fucked—need action and key";
+    public Object process(Message message) {
+        String action = (String) message.getPayload("action", null);
+        String key = (String) message.getPayload("key", null);
+        if (action == null || key == null) return "Config requires both action and key";
         try {
             if ("read".equals(action)) {
                 String sql = "SELECT value FROM config WHERE key = ?";
                 return jdbcTemplate.queryForObject(sql, String.class, key);
             } else if ("write".equals(action)) {
-                String value = (String) message.get("value");
+                String value = (String) message.getPayload("value", null);
                 String sql = "INSERT INTO config (key, value) VALUES (?, ?) ON DUPLICATE KEY UPDATE value = ?";
                 jdbcTemplate.update(sql, key, value, value);
-                return "Wrote " + key + "=" + value + ", prick";
+                return "Wrote " + key + "=" + value + " to config";
             }
-            return "Bad action, asshole: " + action;
+            return "Unsupported action: " + action;
         } catch (Exception e) {
-            return "DB config’s a bitch: " + e.getMessage();
+            return "Failed to process config: " + e.getMessage();
         }
     }
 }
+

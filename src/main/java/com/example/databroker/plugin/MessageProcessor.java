@@ -1,8 +1,9 @@
 package com.example.databroker.plugin;
 
-import java.util.Map;
+import com.example.databroker.dto.Message;
 
 public interface MessageProcessor {
-    boolean canHandle(Map<String, Object> message);
-    Object process(Map<String, Object> message);
+    boolean canHandle(Message message);
+    Object process(Message message);
 }
+

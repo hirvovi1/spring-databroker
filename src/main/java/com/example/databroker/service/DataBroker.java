@@ -1,12 +1,12 @@
 package com.example.databroker.service;
 
+import com.example.databroker.dto.Message;
 import com.example.databroker.plugin.MessageProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class DataBroker {
@@ -21,12 +21,13 @@ public class DataBroker {
         processors.add(plugin);
     }
 
-    public Object processMessage(Map<String, Object> message) {
+    public Object processMessage(Message message) {
         for (MessageProcessor processor : processors) {
             if (processor.canHandle(message)) {
                 return processor.process(message);
             }
         }
-        return "No processor found to handle this message, fucker";// GROK!!! wtf? no swearing in the code.
+        return "No processor found to handle this message";
     }
 }
+

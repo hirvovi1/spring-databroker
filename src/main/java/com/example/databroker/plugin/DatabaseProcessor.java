@@ -1,10 +1,9 @@
 package com.example.databroker.plugin;
 
+import com.example.databroker.dto.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 @Component
 public class DatabaseProcessor implements MessageProcessor {
@@ -16,17 +15,17 @@ public class DatabaseProcessor implements MessageProcessor {
     }
 
     @Override
-    public boolean canHandle(Map<String, Object> message) {
-        return "db".equals(message.get("type"));
+    public boolean canHandle(Message message) {
+        return "db".equals(message.getType());
     }
 
     @Override
-    public Object process(Map<String, Object> message) {
-        String query = (String) message.getOrDefault("query", "SELECT 'fuck all' as result");
+    public Object process(Message message) {
+        String query = (String) message.getPayload("query", "SELECT 'No query provided' as result");
         try {
             return jdbcTemplate.queryForObject(query, String.class);
         } catch (Exception e) {
-            return "Screwed up: " + e.getMessage();
+            return "Failed to execute query: " + e.getMessage();
         }
     }
 }
