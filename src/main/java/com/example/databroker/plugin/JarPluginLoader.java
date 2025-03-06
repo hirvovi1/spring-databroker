@@ -1,16 +1,16 @@
 package com.example.databroker.plugin;
 
-import com.example.databroker.dto.Message;
-import com.example.databr
-oker.service.DataBroker;
-import org.springframework.stereotype.Component;
-
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.JarFile;
+
+import org.springframework.stereotype.Component;
+
+import com.example.databroker.dto.Message;
+import com.example.databroker.service.DataBroker;
 
 @Component
 public class JarPluginLoader implements MessageProcessor {

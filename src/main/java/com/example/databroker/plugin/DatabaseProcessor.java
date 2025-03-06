@@ -1,17 +1,15 @@
 package com.example.databroker.plugin;
 
 import com.example.databroker.dto.Message;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.example.databroker.service.DataBroker;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DatabaseProcessor implements MessageProcessor {
-    private final JdbcTemplate jdbcTemplate;
+    private final DataBroker dataBroker;
 
-    @Autowired
-    public DatabaseProcessor(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public DatabaseProcessor(DataBroker dataBroker) {
+        this.dataBroker = dataBroker;
     }
 
     @Override
@@ -22,10 +20,10 @@ public class DatabaseProcessor implements MessageProcessor {
     @Override
     public Object process(Message message) {
         String query = (String) message.getPayload("query", "SELECT 'No query provided' as result");
-        try {
-            return jdbcTemplate.queryForObject(query, String.class);
-        } catch (Exception e) {
-            return "Failed to execute query: " + e.getMessage();
-        }
+        Message dbMessage = new Message();
+        dbMessage.setType("db_access");
+        dbMessage.addPayload("operation", "query");
+        dbMessage.addPayload("query", query);
+        return dataBroker.processMessage(dbMessage);
     }
 }
