@@ -2,6 +2,7 @@ package com.example.databroker.plugin;
 
 import com.example.databroker.dto.Message;
 import com.example.databroker.service.DataBroker;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 public class OrchestratorPlugin implements MessageProcessor {
     private final DataBroker dataBroker;
 
-    public OrchestratorPlugin(DataBroker dataBroker) {
+    public OrchestratorPlugin(@Lazy DataBroker dataBroker) {
         this.dataBroker = dataBroker;
     }
 
@@ -32,4 +33,3 @@ public class OrchestratorPlugin implements MessageProcessor {
         return result != null ? result : "Chain completed with no result";
     }
 }
-
